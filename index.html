@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Graphic Room — Mobile‑First Design Studio</title>
+  <meta name="description" content="The Graphic Room — Logos, posts, and brand visuals designed using Photoshop and Illustrator." />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#282828;        /* requested background */
+      --fg:#ffffff;        /* requested text/logos */
+      --muted:rgba(255,255,255,.72);
+      --soft:rgba(255,255,255,.08);
+      --soft-2:rgba(255,255,255,.14);
+      --soft-3:rgba(255,255,255,.22);
+    }
+    html,body{background:var(--bg);color:var(--fg);}
+    body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";}
+    /* Reveal on scroll */
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    /* Soft hero grid glow */
+    .grid-overlay{
+      position:absolute;inset:-1px;pointer-events:none;
+      background:
+        radial-gradient(900px 500px at 80% -10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(700px 400px at -10% 20%, rgba(255,255,255,.08), transparent 55%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 80px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 80px);
+      mask-image: radial-gradient(800px 500px at 50% 0%, black, transparent 70%);
+    }
+    /* Buttons */
+    .btn{
+      color:var(--fg);
+      background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08));
+      border:1px solid var(--soft-3);
+      box-shadow:0 6px 18px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.14);
+      transition:transform .15s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease;
+    }
+    .btn:hover{transform:translateY(-1.5px);box-shadow:0 10px 24px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.18);}
+    .btn:active{transform:translateY(0);}
+    .chip{background:var(--soft);border:1px solid var(--soft-2);color:var(--fg);}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid var(--soft-2);}
+    .card:hover{border-color:rgba(255,255,255,.28);}
+    /* Shimmer */
+    .shimmer{
+      background:linear-gradient(110deg, rgba(255,255,255,.06) 0%, rgba(255,255,255,.14) 20%, rgba(255,255,255,.06) 40%);
+      background-size:200% 100%;
+      animation:shimmer 2.2s linear infinite;
+    }
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    /* Testimonials slider */
+    .slide{display:none}
+    .slide.active{display:block}
+    /* Mobile menu animation */
+    .menu-enter{transform:scale(.98) translateY(-6px);opacity:0;}
+    .menu-enter.menu-enter-active{transform:none;opacity:1;transition:all .18s ease;}
+    /* Focus states */
+    :is(a,button,select,input,textarea):focus{outline:2px solid rgba(255,255,255,.5);outline-offset:2px}
+    /* Larger touch targets on mobile */
+    .tappable{min-height:44px;min-width:44px}
+    /* Reduce motion if user prefers */
+    @media (prefers-reduced-motion: reduce){
+      .reveal{transition:none}
+      .shimmer{animation:none}
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-white/10 selection:text-white">
+  <!-- Header -->
+  <header class="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-white/0 bg-white/0 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-between">
+      <!-- Logo (using your URL) -->
+      <a href="#home" class="flex items-center gap-2 sm:gap-3 group" aria-label="Go to home">
+        <div class="size-8 sm:size-9 rounded-md grid place-items-center card overflow-hidden">
+          <img src="https://i.postimg.cc/dQRhN2Tz/The-Graphic-Room-Logo-2.jpg" alt="The Graphic Room logo" class="h-6 sm:h-7 w-auto object-contain"
+               onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+        </div>
+        <div>
+          <div class="text-base sm:text-lg font-extrabold tracking-tight">The Graphic Room</div>
+          <div class="text-[10px] sm:text-xs text-white/60 -mt-0.5">by AWOKS GROUP PVT LTD</div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-5">
+        <a href="#about" class="text-white/80 hover:text-white transition">About</a>
+        <a href="#services" class="text-white/80 hover:text-white transition">Services</a>
+        <a href="#work" class="text-white/80 hover:text-white transition">Examples</a>
+        <a href="#pricing" class="text-white/80 hover:text-white transition">Pricing</a>
+        <a href="#reviews" class="text-white/80 hover:text-white transition">Reviews</a>
+        <a href="#faq" class="text-white/80 hover:text-white transition">FAQ</a>
+        <a href="#contact" class="btn px-4 py-2 rounded-lg text-sm">Start a Project</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menuBtn" class="md:hidden btn px-3 py-2 rounded-lg tappable" aria-expanded="false" aria-controls="mobileMenu">
+        <span class="sr-only">Toggle menu</span>
+        <svg id="iconOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6l-12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobileMenu" class="hidden md:hidden px-4 sm:px-5 pb-4">
+      <div class="menu-enter card rounded-xl p-2 sm:p-3 space-y-1.5">
+        <a href="#about" class="block px-3 py-3 rounded-lg hover:bg-white/5 tappable">About</a>
+        <a href="#services" class="block px-3 py-3 rounded-lg hover:bg-white/5 tappable">Services</a>
+        <a href="#work" class="block px-3 py-3 rounded-lg hover:bg-white/5 tappable">Examples</a>
+        <a href="#pricing" class="block px-3 py-3 rounded-lg hover:bg-white/5 tappable">Pricing</a>
+        <a href="#reviews" class="block px-3 py-3 rounded-lg hover:bg-white/5 tappable">Reviews</a>
+        <a href="#faq" class="block px-3 py-3 rounded-lg hover:bg-white/5 tappable">FAQ</a>
+        <a href="#contact" class="btn block text-center px-4 py-3 rounded-lg tappable">Start a Project</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="relative z-10 pt-24 md:pt-28">
+    <div class="mx-auto max-w-7xl safe-pad">
+      <div class="grid md:grid-cols-2 gap-10 items-center py-10 md:py-16">
+        <div class="reveal" data-delay="0">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs ring-soft">
+            Unforgettable Designs, Every Time.
+          </div>
+          <h2 class="mt-4 text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+            Let’s design something unforgettable.✨
+          </h2>
+          <p class="mt-5 text-lg opacity-80 max-w-xl">
+            The Graphic Room is a creative design studio specializing in logos, social media posts, and professional graphics. We help brands stand out with modern, eye-catching designs that leave a lasting impression. Our goal is to turn your ideas into visuals that truly connect with people.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href="#capabilities" class="btn inline-flex items-center gap-2 rounded-full px-6 py-3 glass ring-soft">
+              Explore Capabilities
+              <svg width="16" height="16" viewBox="0 0 24 24" class="stroke-white stroke-2 fill-none"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#contact" class="btn inline-flex items-center gap-2 rounded-full px-6 py-3 border border-white/25">
+              Start a Project
+              <svg width="16" height="16" viewBox="0 0 24 24" class="stroke-white stroke-2 fill-none"><path d="M12 5v14M5 12h14"/></svg>
+            </a>
+          </div>
+
+          <div class="mt-8 flex items-center gap-3 text-xs opacity-80">
+            <span class="rounded-full border border-white/25 px-3 py-1">Photoshop</span>
+            <span class="rounded-full border border-white/25 px-3 py-1">Illustrator</span>
+            <span class="rounded-full border border-white/25 px-3 py-1">InDesign</span>
+          </div>
+        </div>
+
+        <!-- Hero Visual: Pixel-art animation (white on #282828) -->
+        <div class="reveal" data-delay="100">
+          <div class="rounded-2xl glass p-4 md:p-6 ring-soft overflow-hidden">
+            <!-- New pixel art: Graphic design desk with monitor, toolbar, cursor, pen path + gaming PC setup -->
+            <svg viewBox="0 0 800 360" class="w-full h-[300px] md:h-[360px]" role="img" aria-label="Pixel animation: graphic design workspace with gaming PC, animated text and pen tool">
+              <defs>
+                <style>
+                  .px { shape-rendering: crispEdges; }
+                  @keyframes cursorMove { 0%{transform:translate(0,0)} 50%{transform:translate(16px,-12px)} 100%{transform:translate(0,0)} }
+                  @keyframes dash { to { stroke-dashoffset: -1200; } }
+                  @keyframes draw { 0%{stroke-dashoffset:1200} 100%{stroke-dashoffset:0} }
+                  @keyframes blink { 0%,100%{opacity:.3} 50%{opacity:.95} }
+                  @keyframes pop { 0%{opacity:0; transform:scale(.8)} 100%{opacity:1; transform:scale(1)} }
+                  @keyframes spinFan { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+                  @keyframes breathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+                  @keyframes glow { 0%,100%{opacity:.25} 50%{opacity:.6} }
+                  @keyframes penPath { 0%{transform:translate(0px,160px)} 33%{transform:translate(120px,110px)} 66%{transform:translate(240px,100px)} 100%{transform:translate(352px,148px)} }
+                </style>
+              </defs>
+
+              <!-- subtle pixel grid background -->
+              <g opacity="0.18">
+                <pattern id="grid2" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <rect x="0" y="0" width="1" height="20" fill="white" opacity="0.08"/>
+                  <rect x="0" y="0" width="20" height="1" fill="white" opacity="0.08"/>
+                </pattern>
+                <rect x="0" y="0" width="800" height="360" fill="url(#grid2)"/>
+              </g>
+
+              <!-- Desk -->
+              <rect class="px" x="40" y="320" width="720" height="10" fill="white" opacity="0.85"/>
+              <!-- Ambient LED under-desk strip -->
+              <rect x="40" y="332" width="720" height="4" fill="white" opacity="0.3" style="animation: glow 3.5s ease-in-out infinite"/>
+
+              <!-- Monitor with canvas -->
+              <g class="px" transform="translate(120,40)">
+                <!-- stand -->
+                <rect x="160" y="250" width="80" height="10" fill="white"/>
+                <rect x="190" y="230" width="20" height="20" fill="white"/>
+                <!-- bezel -->
+                <rect x="0" y="0" width="400" height="240" fill="none" stroke="white" stroke-width="6"/>
+                <rect x="8" y="8" width="384" height="224" fill="#282828" stroke="white" stroke-width="2"/>
+
+                <!-- canvas area with animated brand text + multiple curves -->
+                <g transform="translate(20,22)">
+                  <!-- THE GRAPHIC ROOM text outline being drawn -->
+                  <text x="8" y="56" font-size="28" font-weight="700" letter-spacing="2" fill="none" stroke="white" stroke-width="2" stroke-dasharray="600 600" style="animation: draw 4.5s ease forwards">THE GRAPHIC ROOM</text>
+
+                  <!-- layered curvature paths -->
+                  <g transform="translate(20,76)">
+                    <path d="M0,80 C80,0 160,120 240,40 S360,0 360,80" fill="none" stroke="white" stroke-width="2" stroke-dasharray="10 8" style="animation: dash 14s linear infinite"/>
+                    <path d="M0,60 C60,10 140,100 220,30 S340,10 360,60" fill="none" stroke="white" stroke-opacity="0.8" stroke-width="1.5" stroke-dasharray="8 10" style="animation: dash 18s linear infinite"/>
+
+                    <!-- anchor points and handles -->
+                    <rect x="-2" y="78" width="6" height="6" fill="white" style="animation: blink 2.4s infinite"/>
+                    <rect x="238" y="38" width="6" height="6" fill="white" style="animation: blink 2.8s .2s infinite"/>
+                    <rect x="358" y="78" width="6" height="6" fill="white" style="animation: blink 3s .4s infinite"/>
+                    <line x1="0" y1="80" x2="40" y2="40" stroke="white" stroke-opacity="0.6"/>
+                    <rect x="38" y="38" width="6" height="6" fill="white"/>
+                    <line x1="360" y1="80" x2="330" y2="30" stroke="white" stroke-opacity="0.6"/>
+                    <rect x="328" y="28" width="6" height="6" fill="white"/>
+                  </g>
+
+                  <!-- pen nib gliding along main curve -->
+                  <g style="animation: penPath 6s ease-in-out infinite alternate; transform-origin: 0 0;">
+                    <rect x="0" y="0" width="12" height="12" fill="white"/>
+                    <rect x="4" y="4" width="4" height="4" fill="#282828"/>
+                  </g>
+                </g>
+
+                <!-- toolbar (left) -->
+                <g transform="translate(12,16)">
+                  <rect x="0" y="0" width="16" height="208" fill="#282828" stroke="white" stroke-width="2"/>
+                  <rect x="4" y="8" width="8" height="8" fill="white" style="animation: pop .4s .05s forwards; opacity:0"/>
+                  <rect x="4" y="24" width="8" height="8" fill="white" style="animation: pop .4s .15s forwards; opacity:0"/>
+                  <rect x="4" y="40" width="8" height="8" fill="white" style="animation: pop .4s .25s forwards; opacity:0"/>
+                  <rect x="4" y="56" width="8" height="8" fill="white" style="animation: pop .4s .35s forwards; opacity:0"/>
+                  <rect x="4" y="72" width="8" height="8" fill="white" style="animation: pop .4s .45s forwards; opacity:0"/>
+                  <rect x="4" y="88" width="8" height="8" fill="white" style="animation: pop .4s .55s forwards; opacity:0"/>
+                </g>
+
+                <!-- color swatches (bottom) -->
+                <g transform="translate(300,206)" opacity="0.9">
+                  <rect x="0" y="0" width="14" height="14" fill="white" style="animation: blink 2.2s infinite"/>
+                  <rect x="18" y="0" width="14" height="14" fill="white" style="animation: blink 2.6s .3s infinite"/>
+                  <rect x="36" y="0" width="14" height="14" fill="white" style="animation: blink 3s .6s infinite"/>
+                </g>
+              </g>
+
+              <!-- Gaming PC Tower (right side) -->
+              <g class="px" transform="translate(560,86)">
+                <rect x="0" y="0" width="160" height="200" fill="#282828" stroke="white" stroke-width="4"/>
+                <!-- glass side -->
+                <rect x="10" y="10" width="140" height="180" fill="#282828" stroke="white" stroke-width="2"/>
+                <!-- top fan -->
+                <g transform="translate(40,40)" style="animation: spinFan 6s linear infinite; transform-origin: 40px 40px;">
+                  <rect x="35" y="0" width="10" height="40" fill="white"/>
+                  <rect x="35" y="40" width="10" height="40" fill="white"/>
+                  <rect x="0" y="35" width="40" height="10" fill="white"/>
+                  <rect x="40" y="35" width="40" height="10" fill="white"/>
+                </g>
+                <!-- bottom fan -->
+                <g transform="translate(40,120)" style="animation: spinFan 7.5s linear infinite; transform-origin: 40px 40px;">
+                  <rect x="35" y="0" width="10" height="40" fill="white"/>
+                  <rect x="35" y="40" width="10" height="40" fill="white"/>
+                  <rect x="0" y="35" width="40" height="10" fill="white"/>
+                  <rect x="40" y="35" width="40" height="10" fill="white"/>
+                </g>
+                <!-- power LED -->
+                <rect x="130" y="170" width="8" height="8" fill="white" style="animation: blink 1.8s infinite"/>
+              </g>
+
+              <!-- Keyboard (blinking rows) -->
+              <g class="px" transform="translate(160,292)">
+                <rect x="0" y="0" width="280" height="16" fill="#282828" stroke="white" stroke-width="2"/>
+                <!-- keys -->
+                <g opacity="0.9">
+                  <rect x="8" y="4" width="12" height="8" fill="white" style="animation: blink 2.2s infinite"/>
+                  <rect x="26" y="4" width="12" height="8" fill="white" style="animation: blink 2.4s .1s infinite"/>
+                  <rect x="44" y="4" width="12" height="8" fill="white" style="animation: blink 2.6s .2s infinite"/>
+                  <rect x="62" y="4" width="12" height="8" fill="white" style="animation: blink 2.8s .3s infinite"/>
+                  <rect x="80" y="4" width="30" height="8" fill="white" style="animation: blink 3s .4s infinite"/>
+                  <rect x="114" y="4" width="30" height="8" fill="white" style="animation: blink 2.7s .5s infinite"/>
+                  <rect x="148" y="4" width="30" height="8" fill="white" style="animation: blink 2.5s .6s infinite"/>
+                  <rect x="182" y="4" width="30" height="8" fill="white" style="animation: blink 2.3s .7s infinite"/>
+                  <rect x="216" y="4" width="30" height="8" fill="white" style="animation: blink 2.1s .8s infinite"/>
+                </g>
+              </g>
+
+              <!-- Mouse (breathing) -->
+              <g class="px" transform="translate(460,294)" style="animation: breathe 2.8s ease-in-out infinite; transform-origin: 470px 302px;">
+                <rect x="0" y="0" width="20" height="12" fill="white"/>
+                <rect x="8" y="2" width="2" height="4" fill="#282828"/>
+              </g>
+
+              <!-- Headset on stand (left) -->
+              <g class="px" transform="translate(90,254)">
+                <!-- stand -->
+                <rect x="14" y="0" width="6" height="46" fill="white"/>
+                <rect x="0" y="46" width="34" height="6" fill="white"/>
+                <!-- cups -->
+                <rect x="-6" y="6" width="12" height="20" fill="white"/>
+                <rect x="28" y="6" width="12" height="20" fill="white"/>
+                <!-- headband -->
+                <rect x="-2" y="0" width="40" height="6" fill="white"/>
+              </g>
+
+              <!-- Pixel cursor moving toward the canvas -->
+              <g class="px" transform="translate(520,250)" style="animation: cursorMove 3.2s ease-in-out infinite">
+                <rect x="0" y="0" width="14" height="14" fill="white"/>
+                <rect x="14" y="6" width="6" height="4" fill="white"/>
+                <rect x="14" y="10" width="4" height="6" fill="white"/>
+              </g>
+
+              <!-- HUD rulers -->
+              <g opacity="0.3">
+                <rect x="120" y="24" width="400" height="6" fill="white"/>
+                <rect x="114" y="24" width="6" height="246" fill="white"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- About -->
+  <section id="about" class="relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-12 sm:py-16 md:py-20">
+      <div class="grid md:grid-cols-12 gap-8 sm:gap-10 items-start">
+        <div class="md:col-span-5 reveal">
+          <h2 class="text-[clamp(22px,4.5vw,36px)] font-extrabold tracking-tight">About Us</h2>
+          <p class="text-white/80 mt-3 sm:mt-4 text-[clamp(14px,3.8vw,18px)]">
+            Lets Design Something Unfoggetable.
+          </p>
+          <p class="text-white/70 mt-3 sm:mt-4 text-sm sm:text-base">
+            We design logos, social media posts, and every brand visual using Photoshop and Illustrator. Strategy meets style—so your audience remembers you.
+          </p>
+          <div class="mt-5 sm:mt-6 flex gap-2.5 sm:gap-3 flex-wrap">
+            <span class="chip px-3 py-1.5 rounded-full text-xs">Logos</span>
+            <span class="chip px-3 py-1.5 rounded-full text-xs">Posts</span>
+            <span class="chip px-3 py-1.5 rounded-full text-xs">Brand Kits</span>
+            <span class="chip px-3 py-1.5 rounded-full text-xs">Print</span>
+            <span class="chip px-3 py-1.5 rounded-full text-xs">Packaging</span>
+          </div>
+        </div>
+        <div class="md:col-span-7 reveal">
+          <div class="grid sm:grid-cols-2 gap-4 sm:gap-5">
+            <div class="card rounded-2xl p-5">
+              <div class="size-10 grid place-items-center rounded-lg chip mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="white" stroke-opacity=".9"/><path d="M14.06 6.19l3.75 3.75" stroke="white" stroke-opacity=".6"/></svg>
+              </div>
+              <h3 class="font-semibold text-base sm:text-lg">Logo Design</h3>
+              <p class="text-white/70 mt-1.5 text-sm">Unique marks with strong typography and scalable geometry.</p>
+            </div>
+            <div class="card rounded-2xl p-5">
+              <div class="size-10 grid place-items-center rounded-lg chip mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="6" height="6" stroke="white" stroke-opacity=".9"/><rect x="14" y="4" width="6" height="6" stroke="white" stroke-opacity=".9"/><rect x="4" y="14" width="6" height="6" stroke="white" stroke-opacity=".9"/><rect x="14" y="14" width="6" height="6" stroke="white" stroke-opacity=".9"/></svg>
+              </div>
+              <h3 class="font-semibold text-base sm:text-lg">Social Posts</h3>
+              <p class="text-white/70 mt-1.5 text-sm">Scroll-stopping content sized for every platform.</p>
+            </div>
+            <div class="card rounded-2xl p-5">
+              <div class="size-10 grid place-items-center rounded-lg chip mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5-9 5-9-5 9-5z" stroke="white" stroke-opacity=".9"/><path d="M21 12l-9 5-9-5" stroke="white" stroke-opacity=".6"/></svg>
+              </div>
+              <h3 class="font-semibold text-base sm:text-lg">Brand Identity</h3>
+              <p class="text-white/70 mt-1.5 text-sm">Colors, type, and guidelines to keep everything consistent.</p>
+            </div>
+            <div class="card rounded-2xl p-5">
+              <div class="size-10 grid place-items-center rounded-lg chip mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="6" stroke="white" stroke-opacity=".9"/><rect x="5" y="9" width="14" height="10" stroke="white" stroke-opacity=".9"/><rect x="8" y="13" width="8" height="4" stroke="white" stroke-opacity=".6"/></svg>
+              </div>
+              <h3 class="font-semibold text-base sm:text-lg">Print & Packaging</h3>
+              <p class="text-white/70 mt-1.5 text-sm">From business cards to boxes with press-ready files.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-12 sm:py-16 md:py-20">
+      <div class="reveal text-center">
+        <h2 class="text-[clamp(22px,4.5vw,36px)] font-extrabold">What We Can Design</h2>
+        <p class="text-white/70 mt-2 sm:mt-3 text-sm sm:text-base">Everything your brand needs—designed beautifully.</p>
+      </div>
+      <div class="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div class="card rounded-2xl p-5 reveal"><h3 class="font-semibold">Logo & Monogram</h3><p class="text-white/70 text-sm mt-1.5">Primary, secondary, and icon marks.</p></div>
+        <div class="card rounded-2xl p-5 reveal"><h3 class="font-semibold">Social Media Posts</h3><p class="text-white/70 text-sm mt-1.5">Instagram, Facebook, LinkedIn, YouTube covers.</p></div>
+        <div class="card rounded-2xl p-5 reveal"><h3 class="font-semibold">Brand Guidelines</h3><p class="text-white/70 text-sm mt-1.5">Color, type, spacing, usage rules.</p></div>
+        <div class="card rounded-2xl p-5 reveal"><h3 class="font-semibold">Posters & Flyers</h3><p class="text-white/70 text-sm mt-1.5">Events, promos, menus and more.</p></div>
+        <div class="card rounded-2xl p-5 reveal"><h3 class="font-semibold">Packaging & Labels</h3><p class="text-white/70 text-sm mt-1.5">Boxes, pouches, stickers, sleeves.</p></div>
+        <div class="card rounded-2xl p-5 reveal"><h3 class="font-semibold">Business Collateral</h3><p class="text-white/70 text-sm mt-1.5">Cards, letterheads, email signatures.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Examples -->
+  <section id="work" class="relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-12 sm:py-16 md:py-20">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
+        <div class="reveal">
+          <h2 class="text-[clamp(22px,4.5vw,36px)] font-extrabold">Examples</h2>
+          <p class="text-white/70 mt-1.5 sm:mt-2 text-sm sm:text-base">A peek at recent visual styles and mockups.</p>
+        </div>
+        <a href="#contact" class="btn px-4 py-2 rounded-lg h-fit reveal text-center tappable">Request a custom sample</a>
+      </div>
+
+      <div class="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <article class="card rounded-2xl overflow-hidden group reveal">
+          <div class="aspect-[4/3] relative">
+            <div class="absolute inset-0 shimmer opacity-60"></div>
+            <svg viewBox="0 0 400 300" class="w-full h-full block">
+              <rect width="400" height="300" fill="rgba(255,255,255,0.06)"/>
+              <circle cx="100" cy="150" r="45" fill="white"/>
+              <rect x="170" y="130" width="120" height="40" fill="white" rx="8"/>
+            </svg>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold">Logo Concept</h3>
+            <p class="text-white/60 text-sm mt-1">Icon + type lockup</p>
+          </div>
+        </article>
+
+        <article class="card rounded-2xl overflow-hidden group reveal">
+          <div class="aspect-[4/3] relative">
+            <svg viewBox="0 0 400 300" class="w-full h-full block">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="rgba(255,255,255,0.14)" />
+                  <stop offset="100%" stop-color="rgba(255,255,255,0.06)" />
+                </linearGradient>
+              </defs>
+              <rect width="400" height="300" fill="url(#g1)"/>
+              <rect x="40" y="40" width="320" height="220" fill="rgba(0,0,0,0.25)" rx="16" stroke="white" stroke-opacity=".4"/>
+              <rect x="70" y="70" width="260" height="40" fill="white" rx="6"/>
+              <rect x="70" y="120" width="220" height="16" fill="white" opacity=".6" rx="4"/>
+              <rect x="70" y="150" width="180" height="16" fill="white" opacity=".5" rx="4"/>
+            </svg>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold">Social Post Set</h3>
+            <p class="text-white/60 text-sm mt-1">Square + story variations</p>
+          </div>
+        </article>
+
+        <article class="card rounded-2xl overflow-hidden group reveal">
+          <div class="aspect-[4/3] relative">
+            <svg viewBox="0 0 400 300" class="w-full h-full block">
+              <rect width="400" height="300" fill="rgba(255,255,255,0.08)"/>
+              <rect x="120" y="60" width="160" height="180" fill="white" rx="14"/>
+              <rect x="135" y="90" width="130" height="14" fill="rgba(0,0,0,0.2)" rx="4"/>
+              <rect x="135" y="120" width="120" height="14" fill="rgba(0,0,0,0.18)" rx="4"/>
+              <rect x="135" y="150" width="90" height="14" fill="rgba(0,0,0,0.15)" rx="4"/>
+            </svg>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold">Packaging Preview</h3>
+            <p class="text-white/60 text-sm mt-1">Minimal, bold shape language</p>
+          </div>
+        </article>
+
+        <article class="card rounded-2xl overflow-hidden group reveal">
+          <div class="aspect-[4/3] relative">
+            <svg viewBox="0 0 400 300" class="w-full h-full block">
+              <rect width="400" height="300" fill="rgba(255,255,255,0.06)"/>
+              <rect x="60" y="50" width="280" height="200" fill="white" rx="12"/>
+              <rect x="80" y="80" width="240" height="20" fill="rgba(0,0,0,0.2)" rx="4"/>
+              <rect x="80" y="112" width="210" height="12" fill="rgba(0,0,0,0.18)" rx="4"/>
+              <rect x="80" y="132" width="140" height="12" fill="rgba(0,0,0,0.16)" rx="4"/>
+            </svg>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold">Poster Design</h3>
+            <p class="text-white/60 text-sm mt-1">Type-led layout</p>
+          </div>
+        </article>
+
+        <article class="card rounded-2xl overflow-hidden group reveal">
+          <div class="aspect-[4/3] relative">
+            <svg viewBox="0 0 400 300" class="w-full h-full block">
+              <rect width="400" height="300" fill="rgba(255,255,255,0.07)"/>
+              <circle cx="200" cy="150" r="80" fill="white"/>
+              <rect x="150" y="140" width="100" height="20" fill="rgba(0,0,0,0.2)" rx="4"/>
+            </svg>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold">Icon Set</h3>
+            <p class="text-white/60 text-sm mt-1">Simple, clean shapes</p>
+          </div>
+        </article>
+
+        <article class="card rounded-2xl overflow-hidden group reveal">
+          <div class="aspect-[4/3] relative">
+            <svg viewBox="0 0 400 300" class="w-full h-full block">
+              <rect width="400" height="300" fill="rgba(255,255,255,0.06)"/>
+              <rect x="80" y="60" width="240" height="180" fill="white" rx="10"/>
+              <rect x="96" y="88" width="208" height="14" fill="rgba(0,0,0,0.2)" rx="4"/>
+              <rect x="96" y="112" width="170" height="12" fill="rgba(0,0,0,0.18)" rx="4"/>
+              <rect x="96" y="132" width="120" height="12" fill="rgba(0,0,0,0.16)" rx="4"/>
+            </svg>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold">Brand Guidelines</h3>
+            <p class="text-white/60 text-sm mt-1">Typography and usage</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-12 sm:py-16 md:py-20">
+      <div class="reveal text-center">
+        <h2 class="text-[clamp(22px,4.5vw,36px)] font-extrabold">Pricing</h2>
+        <p class="text-white/70 mt-2 sm:mt-3 text-sm sm:text-base">Clear packages. No surprises.</p>
+      </div>
+
+      <div class="mt-8 sm:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+        <div class="card rounded-2xl p-5 reveal flex flex-col">
+          <h3 class="font-semibold text-lg">Starter</h3>
+          <p class="text-white/60 text-sm mt-0.5">For quick wins</p>
+          <div class="mt-4 text-2xl sm:text-3xl font-extrabold">$149</div>
+          <ul class="mt-3 text-sm text-white/70 space-y-2">
+            <li>• 1 Logo concept</li>
+            <li>• 1 Social post template</li>
+            <li>• 1 Revision</li>
+            <li>• PNG + SVG export</li>
+          </ul>
+          <button class="btn mt-5 px-4 py-2 rounded-lg w-full md:w-auto tappable" onclick="openBriefWithPlan('Starter')">Choose Starter</button>
+        </div>
+
+        <div class="card rounded-2xl p-5 reveal flex flex-col ring-1 ring-white/20">
+          <div class="inline-flex items-center gap-2 self-start chip px-2.5 py-1 rounded-full text-xs">Popular</div>
+          <h3 class="font-semibold text-lg mt-2">Brand Kit</h3>
+          <p class="text-white/60 text-sm mt-0.5">Best value</p>
+          <div class="mt-4 text-2xl sm:text-3xl font-extrabold">$349</div>
+          <ul class="mt-3 text-sm text-white/70 space-y-2">
+            <li>• 2 Logo concepts</li>
+            <li>• 6 Social post templates</li>
+            <li>• Brand colors + type</li>
+            <li>• 2 Revisions</li>
+          </ul>
+          <button class="btn mt-5 px-4 py-2 rounded-lg w-full md:w-auto tappable" onclick="openBriefWithPlan('Brand Kit')">Choose Brand Kit</button>
+        </div>
+
+        <div class="card rounded-2xl p-5 reveal flex flex-col">
+          <h3 class="font-semibold text-lg">Pro</h3>
+          <p class="text-white/60 text-sm mt-0.5">For full scope</p>
+          <div class="mt-4 text-2xl sm:text-3xl font-extrabold">$699</div>
+          <ul class="mt-3 text-sm text-white/70 space-y-2">
+            <li>• 3 Logo concepts</li>
+            <li>• 12 Social post templates</li>
+            <li>• Guidelines PDF</li>
+            <li>• 3 Revisions</li>
+          </ul>
+          <button class="btn mt-5 px-4 py-2 rounded-lg w-full md:w-auto tappable" onclick="openBriefWithPlan('Pro')">Choose Pro</button>
+        </div>
+      </div>
+
+      <p class="text-white/50 text-xs mt-4 text-center">Prices are indicative. We’ll confirm final scope before starting.</p>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-12 sm:py-16 md:py-20">
+      <div class="reveal text-center">
+        <h2 class="text-[clamp(22px,4.5vw,36px)] font-extrabold">Customer Reviews</h2>
+        <p class="text-white/70 mt-2 sm:mt-3 text-sm sm:text-base">What clients say about working with us.</p>
+      </div>
+
+      <div class="mt-8 sm:mt-10 max-w-3xl mx-auto card rounded-2xl p-4 sm:p-6">
+        <div id="slides">
+          <div class="slide active">
+            <p class="text-base sm:text-lg">“They nailed our logo on the first try. Clean, modern, and memorable.”</p>
+            <div class="mt-3 sm:mt-4 text-white/70 text-sm">— Aisha, Cafe Owner</div>
+          </div>
+          <div class="slide">
+            <p class="text-base sm:text-lg">“Our social posts finally look consistent. The templates are a lifesaver.”</p>
+            <div class="mt-3 sm:mt-4 text-white/70 text-sm">— Daniel, Fitness Coach</div>
+          </div>
+          <div class="slide">
+            <p class="text-base sm:text-lg">“Fast delivery and great communication. Highly recommend The Graphic Room.”</p>
+            <div class="mt-3 sm:mt-4 text-white/70 text-sm">— Priya, Startup Founder</div>
+          </div>
+        </div>
+        <div class="mt-5 sm:mt-6 flex items-center justify-between">
+          <button id="prev" class="btn px-4 py-2 rounded-lg tappable">Prev</button>
+          <div class="flex gap-2" id="dots" aria-label="Testimonials position"></div>
+          <button id="next" class="btn px-4 py-2 rounded-lg tappable">Next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process" class="relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-12 sm:py-16 md:py-20">
+      <div class="reveal text-center">
+        <h2 class="text-[clamp(22px,4.5vw,36px)] font-extrabold">How It Works</h2>
+      </div>
+      <div class="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
+        <div class="card rounded-2xl p-5 reveal">
+          <div class="chip size-8 grid place-items-center rounded-lg mb-2.5">1</div>
+          <h3 class="font-semibold">Brief</h3>
+          <p class="text-white/70 text-sm mt-1">Tell us your goals and style.</p>
+        </div>
+        <div class="card rounded-2xl p-5 reveal">
+          <div class="chip size-8 grid place-items-center rounded-lg mb-2.5">2</div>
+          <h3 class="font-semibold">Concept</h3>
+          <p class="text-white/70 text-sm mt-1">We explore and present options.</p>
+        </div>
+        <div class="card rounded-2xl p-5 reveal">
+          <div class="chip size-8 grid place-items-center rounded-lg mb-2.5">3</div>
+          <h3 class="font-semibold">Refine</h3>
+          <p class="text-white/70 text-sm mt-1">You give feedback, we perfect.</p>
+        </div>
+        <div class="card rounded-2xl p-5 reveal">
+          <div class="chip size-8 grid place-items-center rounded-lg mb-2.5">4</div>
+          <h3 class="font-semibold">Deliver</h3>
+          <p class="text-white/70 text-sm mt-1">Final files ready to use.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-5 py-12 sm:py-16 md:py-20">
+      <div class="reveal text-center">
+        <h2 class="text-[clamp(22px,4.5vw,36px)] font-extrabold">FAQ</h2>
+        <p class="text-white/70 mt-2 sm:mt-3 text-sm sm:text-base">Quick answers to common questions.</p>
+      </div>
+      <div class="mt-6 sm:mt-8 space-y-3">
+        <details class="card rounded-xl p-4 sm:p-5 reveal group">
+          <summary class="cursor-pointer list-none flex items-center justify-between tappable">
+            <span class="font-semibold">How fast is delivery?</span>
+            <span class="chip size-7 grid place-items-center rounded-md transition group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-white/70 mt-3 text-sm">Most small projects take 2–5 business days. Bigger scopes may take a bit longer.</p>
+        </details>
+        <details class="card rounded-xl p-4 sm:p-5 reveal group">
+          <summary class="cursor-pointer list-none flex items-center justify-between tappable">
+            <span class="font-semibold">What files do I get?</span>
+            <span class="chip size-7 grid place-items-center rounded-md transition group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-white/70 mt-3 text-sm">Common exports include PNG, JPG, PDF, and SVG. Source files available on request.</p>
+        </details>
+        <details class="card rounded-xl p-4 sm:p-5 reveal group">
+          <summary class="cursor-pointer list-none flex items-center justify-between tappable">
+            <span class="font-semibold">Can you match my existing style?</span>
+            <span class="chip size-7 grid place-items-center rounded-md transition group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-white/70 mt-3 text-sm">Absolutely. Share samples or brand assets and we’ll align perfectly.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-5 py-12 sm:py-16 md:py-20 text-center">
+      <div class="reveal">
+        <h2 class="text-[clamp(22px,4.5vw,36px)] font-extrabold">Ready to get started?</h2>
+        <p class="text-white/70 mt-2 sm:mt-3 text-sm sm:text-base">Tell us about your project and we’ll reply with next steps.</p>
+        <div class="mt-5 sm:mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button id="openBrief2" class="btn px-5 py-3 rounded-xl w-full sm:w-auto tappable">Start a Project</button>
+          <a href="mailto:hello@thegraphicroom.example?subject=Project%20Inquiry%20-%20The%20Graphic%20Room" class="btn px-5 py-3 rounded-xl w-full sm:w-auto text-center tappable">Email Us</a>
+        </div>
+        <p class="text-white/40 text-xs mt-3">The brief modal creates an email draft with your selections.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-8 sm:py-10">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6">
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <div class="size-8 sm:size-9 rounded-md grid place-items-center card overflow-hidden">
+            <img src="https://i.postimg.cc/dQRhN2Tz/The-Graphic-Room-Logo-2.jpg" alt="The Graphic Room logo" class="h-6 sm:h-7 w-auto object-contain"
+                 onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+          </div>
+          <div>
+            <div class="font-bold text-sm sm:text-base">The Graphic Room</div>
+            <div class="text-[11px] sm:text-xs text-white/60 -mt-0.5">© <span id="y"></span> All rights reserved.</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 sm:gap-4">
+          <a href="#work" class="text-white/70 hover:text-white transition text-sm">Work</a>
+          <a href="#pricing" class="text-white/70 hover:text-white transition text-sm">Pricing</a>
+          <a href="#contact" class="text-white/70 hover:text-white transition text-sm">Contact</a>
+          <div class="flex items-center gap-2">
+            <a href="#" class="chip size-9 rounded-lg grid place-items-center" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="white" stroke-opacity=".8"/><circle cx="12" cy="12" r="4" stroke="white" stroke-opacity=".8"/><circle cx="17.5" cy="6.5" r="1" fill="white"/></svg>
+            </a>
+            <a href="#" class="chip size-9 rounded-lg grid place-items-center" aria-label="Behance">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 16h5a3 3 0 0 0 0-6H4v6zM4 10h4.5" stroke="white" stroke-opacity=".8"/><path d="M14 16h6a3 3 0 1 0 0-6h-6v6z" stroke="white" stroke-opacity=".8"/></svg>
+            </a>
+            <a href="#" class="chip size-9 rounded-lg grid place-items-center" aria-label="Dribbble">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-opacity=".8"/><path d="M4 9.5c5 0 9.5-.5 12.5-3.5M6 18c3-4 7-6 14-6" stroke="white" stroke-opacity=".8"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Project Brief Modal (creates an email draft) -->
+  <div id="briefModal" class="fixed inset-0 z-40 hidden">
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="relative w-[92vw] max-w-lg mx-auto mt-10 sm:mt-24 mb-6 card rounded-2xl p-4 sm:p-6">
+      <div class="flex items-start justify-between">
+        <h3 class="text-lg sm:text-xl font-bold">Start Your Project</h3>
+        <button id="closeBrief" class="chip size-9 rounded-lg grid place-items-center tappable" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6l-12 12" stroke="white" stroke-opacity=".9"/></svg>
+        </button>
+      </div>
+      <p class="text-white/70 text-sm mt-2">Pick what you need and we’ll prepare an email draft for you.</p>
+
+      <div class="mt-4 sm:mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div>
+          <label class="block text-sm mb-1">Package</label>
+          <select id="briefPlan" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white">
+            <option value="Undecided">Undecided</option>
+            <option>Starter</option>
+            <option>Brand Kit</option>
+            <option>Pro</option>
+            <option>Custom</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm mb-1">Project Type</label>
+          <select id="briefType" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white">
+            <option>Logo</option>
+            <option>Social Posts</option>
+            <option>Brand Identity</option>
+            <option>Packaging</option>
+            <option>Print Collateral</option>
+          </select>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-sm mb-1">Brand / Business Name</label>
+          <input id="briefBrand" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white" placeholder="Your brand name"/>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-sm mb-1">Notes</label>
+          <textarea id="briefNotes" rows="3" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white" placeholder="Share goals, style, or references"></textarea>
+        </div>
+      </div>
+
+      <div class="mt-5 sm:mt-6 flex flex-col sm:flex-row gap-2 sm:gap-3 sm:items-center sm:justify-between">
+        <button id="briefCancel" class="px-4 py-2 rounded-lg chip w-full sm:w-auto tappable">Cancel</button>
+        <button id="briefContinue" class="px-5 py-2 rounded-lg btn w-full sm:w-auto tappable">Create Email Draft</button>
+      </div>
+      <p class="text-white/50 text-xs mt-3">This opens your email app with details filled in. No data is stored.</p>
+    </div>
+  </div>
+
+  <script>
+    // Current year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Smooth scroll for in-page links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({behavior:'smooth', block:'start'});
+          closeMobileMenu();
+        }
+      });
+    });
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const iconOpen = document.getElementById('iconOpen');
+    const iconClose = document.getElementById('iconClose');
+    function closeMobileMenu(){
+      if(!mobileMenu.classList.contains('hidden')){
+        mobileMenu.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded','false');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      }
+    }
+    if(menuBtn){
+      menuBtn.addEventListener('click', ()=>{
+        const opening = mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden');
+        menuBtn.setAttribute('aria-expanded', opening ? 'true' : 'false');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+        if(opening){
+          const box = mobileMenu.querySelector('.menu-enter');
+          requestAnimationFrame(()=>box.classList.add('menu-enter-active'));
+        }
+      });
+    }
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Testimonials slider
+    const slides = Array.from(document.querySelectorAll('#slides .slide'));
+    const dotsWrap = document.getElementById('dots');
+    let idx = 0;
+    function renderDots(){
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i)=>{
+        const b = document.createElement('button');
+        b.className = 'w-6 h-2 rounded-full ' + (i===idx? 'bg-white':'bg-white/40');
+        b.ariaLabel = 'Go to slide ' + (i+1);
+        b.addEventListener('click', ()=>go(i));
+        dotsWrap.appendChild(b);
+      });
+    }
+    function go(i){
+      slides[idx].classList.remove('active');
+      idx = (i+slides.length)%slides.length;
+      slides[idx].classList.add('active');
+      renderDots();
+    }
+    document.getElementById('prev').addEventListener('click', ()=>go(idx-1));
+    document.getElementById('next').addEventListener('click', ()=>go(idx+1));
+    renderDots();
+    let auto = setInterval(()=>go(idx+1), 6000);
+    ['prev','next','dots'].forEach(id=>{
+      const el = id==='dots'?dotsWrap:document.getElementById(id);
+      el.addEventListener('mouseenter', ()=>clearInterval(auto));
+      el.addEventListener('mouseleave', ()=>auto = setInterval(()=>go(idx+1), 6000));
+      el.addEventListener('touchstart', ()=>clearInterval(auto), {passive:true});
+    });
+
+    // Project brief modal (email draft)
+    const briefModal = document.getElementById('briefModal');
+    const openBrief = document.getElementById('openBrief');
+    const openBrief2 = document.getElementById('openBrief2');
+    const closeBrief = document.getElementById('closeBrief');
+    const briefCancel = document.getElementById('briefCancel');
+    const briefContinue = document.getElementById('briefContinue');
+    const briefPlan = document.getElementById('briefPlan');
+    const briefType = document.getElementById('briefType');
+    const briefBrand = document.getElementById('briefBrand');
+    const briefNotes = document.getElementById('briefNotes');
+
+    function showBrief(){
+      briefModal.classList.remove('hidden');
+      document.body.style.overflow='hidden';
+    }
+    function hideBrief(){
+      briefModal.classList.add('hidden');
+      document.body.style.overflow='';
+    }
+    function openBriefWithPlan(plan){ showBrief(); briefPlan.value = plan || 'Undecided'; }
+    window.openBriefWithPlan = openBriefWithPlan;
+
+    [openBrief, openBrief2].forEach(btn=>btn && btn.addEventListener('click', showBrief));
+    [closeBrief, briefCancel].forEach(btn=>btn && btn.addEventListener('click', hideBrief));
+    briefModal.addEventListener('click', (e)=>{ if(e.target===briefModal) hideBrief(); });
+
+    briefContinue.addEventListener('click', ()=>{
+      const subject = encodeURIComponent(`Project Inquiry - ${briefPlan.value} - The Graphic Room`);
+      const bodyLines = [
+        `Project Type: ${briefType.value}`,
+        `Brand Name: ${briefBrand.value || '(not provided)'}`,
+        '',
+        'Notes:',
+        (briefNotes.value || '(none)'),
+        '',
+        '— Sent from The Graphic Room website'
+      ];
+      const body = encodeURIComponent(bodyLines.join('\n'));
+      const mailto = `mailto:hello@thegraphicroom.example?subject=${subject}&body=${body}`;
+      window.location.href = mailto;
+      hideBrief();
+    });
+
+    // Safe-area padding for iOS notch when modal open (visual only)
+    document.documentElement.style.setProperty('--sat', (window.safeAreaInsets ? window.safeAreaInsets.top : 0) + 'px');
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fa0af1c592b306',t:'MTc1Nzk1OTQyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
